@@ -8,12 +8,14 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ChatIcon from '@material-ui/icons/Chat';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import "./Header.css"
+import linkedinicon from "./assests/ln.png"
+import avatar from "./assests/avatar.jpg"
 function Header() {
-  return <div className="header">
+  return (
+  <div className="header">
 
     <div className="header_left">
-        {/* <img src="" alt=""/> */}
-        <LinkedInIcon/>
+        <img src={linkedinicon} alt=""/>
 
         <div className="header_search">
             <SearchIcon/>
@@ -30,10 +32,11 @@ function Header() {
 
         <HeaderOption Icon={ChatIcon} title= "Messaging"/>
         <HeaderOption Icon={NotificationsIcon} title= "Notification"/>
-        <HeaderOption avatar="" title= "me"/>
+        <HeaderOption avatar={avatar} title= "me"/>
 
     </div>
-  </div>;
+  </div>
+  );
 }
 
 export default Header;

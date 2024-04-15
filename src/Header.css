@@ -8,16 +8,21 @@
     padding-bottom: 10px;
     width: 100%;
     z-index: 999;
+    background-color: white;
+    margin-bottom: 29px;
 }
 
 .header_left{
     display: flex;
+
+    
 }
 
 .header_left > img {
     object-fit:contain;
     height:40px;
     margin-right: 10px;
+
 }
 
 .header_search{
@@ -34,7 +39,9 @@
 outline:none;
 border: none;
 background: none;
+
 }
 .header_right{
     display: flex;
+
 }
