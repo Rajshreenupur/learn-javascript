@@ -1,5 +1,4 @@
 .login{
-    display: flex;
     place-items: center;
     margin-left: auto;
     margin-right: auto;
@@ -7,9 +6,9 @@
     padding-bottom: 100px;
 }
 
-.login >img {
+.login > img {
     object-fit: contain;
-    height: 70px;
+    height: 100px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -35,14 +34,19 @@
     color: #fff;
     background-color: #0074b1;
     border-radius: 5px;
+    cursor: pointer;
+
 }
 
 .login_register{
     color: #0074b1;
     cursor: pointer;
+    place-items: center;
 }
 
 .login > p{
     margin-top: 20px;
 }
+
+
 

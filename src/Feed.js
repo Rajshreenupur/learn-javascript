@@ -9,8 +9,12 @@ import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import { db } from './firebase';
 import { addDoc, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
  import Post from './Post';
- 
+import { selectUser } from './features/userSlice';
+import {useSelector} from "react-redux"
+
 function Feed() {
+
+  const user=useSelector(selectUser)
   const [input, setInput] = useState('');
   const [posts, setPosts] = useState([]);
  
@@ -45,10 +49,10 @@ function Feed() {
     try {
 
       addDoc(UsersCollectionRef, {
-          name: 'Rajshree Nupur',
-          description: 'Full Stack Developer',
+          name: user.displayName || 'Rajshree Nupur',
+          description: user.email,
           message: input,
-          photoUrl: '',
+          photoUrl: user.photoUrl || "",
           timestamp: serverTimestamp()
        })
       setInput('');

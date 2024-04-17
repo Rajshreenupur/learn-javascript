@@ -11,7 +11,7 @@ function Post({name,description,message,photoUrl}) {
    return (
     <div className='post'>
       <div className='post_header'>
-        <Avatar />
+        <Avatar src={photoUrl}> </Avatar> 
 
         <div className='post_info'>
           <h2>{name}</h2>
