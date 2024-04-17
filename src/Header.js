@@ -9,7 +9,18 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import "./Header.css"
 import linkedin from "./assests/ln.png"
 import avatar from "./assests/avatar.jpg"
+import { logout } from "./features/userSlice";
+import { useDispatch } from "react-redux";
+import { auth } from "./firebase";
+
 function Header() {
+
+  // const dispatch=useDispatch();
+  // const logoutOfApp =() =>{
+  //   dispatch(logout())
+  //   auth.signOut();
+  // }
+
   return (
   <div className="header">
 
@@ -18,7 +29,7 @@ function Header() {
 
         <div className="header_search">
             <SearchIcon/>
-            <input type ="text" />
+            <input type ="text" placeholder="Search "/>
 
         </div>
     </div>
@@ -31,7 +42,7 @@ function Header() {
 
         <HeaderOption Icon={ChatIcon} title= "Messaging"/>
         <HeaderOption Icon={NotificationsIcon} title= "Notification"/>
-        <HeaderOption avatar={avatar} title= "me"/>
+        {/* <HeaderOption avatar={avatar} title= "me" onClick={logoutOfApp}/> */}
 
     </div>
   </div>

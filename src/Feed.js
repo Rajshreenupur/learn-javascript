@@ -7,7 +7,7 @@ import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import { db } from './firebase';
-import { addDoc, collection, getDocs, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
  import Post from './Post';
  
 function Feed() {
@@ -18,28 +18,27 @@ function Feed() {
   const UsersCollectionRef = collection(db, "posts")
 
   useEffect(() => {
-    const getUsersData = async () => {
-      const data = await getDocs(UsersCollectionRef)
-      setPosts(data.docs.map((elem) => (
-        { data:elem.data(),
-           id: elem.id })))
-    }
+    // Function to fetch posts from Firestore and listen for changes
+    const fetchPosts = async () => {
+      const PostsCollectionRef = collection(db, "posts");
+      const q = query(PostsCollectionRef, orderBy('timestamp', 'desc')); // Query to order posts by timestamp in descending order
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const postsData = [];
+        snapshot.forEach((doc) => {
+          postsData.push({ 
+            id: doc.id, 
+            data:doc.data() });
+        });
+        setPosts(postsData);
+      });
 
-    getUsersData()
+      // Clean up function to unsubscribe from snapshot listener when component unmounts
+      return () => unsubscribe();
+    };
 
+    fetchPosts(); // Call the function to fetch posts when the component mounts
+  }, []);
 
-    // Listen for real-time updates to posts
-    const unsubscribe = onSnapshot(UsersCollectionRef, (snapshot) => {
-      setPosts(snapshot.docs.map((elem) => ({
-        data: elem.data(),
-        id: elem.id
-      })))
-    })
-
-    // Clean up the listener
-    return () => unsubscribe()
-    
-}, [])
 
   const sendPost = async (e) => {
     e.preventDefault();
@@ -68,7 +67,7 @@ function Feed() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               type='text'
-              placeholder='Start a post'
+              placeholder='Share your thoughts....'
             />
             <button onClick={sendPost} type='submit'>
               Send
@@ -81,6 +80,7 @@ function Feed() {
           <InputOption Icon={SubscriptionsIcon} title='Video' color='#E7A33E' />
           <InputOption Icon={EventNoteIcon} title='Event' color='#C0CBCD' />
           <InputOption Icon={CalendarViewDayIcon} title='Write article' color='#7FC15E' />
+          
         </div>
       </div>
 
@@ -98,6 +98,8 @@ function Feed() {
 
     </div>
   );
+  
 }
 
 export default Feed;
+
